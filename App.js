@@ -1,20 +1,43 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import { Provider } from "react-redux";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import HelloWorldScreen from "./components/HelloWorld";
+import LoginScreen from "./components/LoginScreen";
+import { StatusBar } from "expo-status-bar";
+import WelcomeScreen from "./components/WelcomeScreen";
+import OnboardingScreen from "./Screen/OnboardingScreen";
+import { store } from "./state/store";
+const Stack = createStackNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Provider store={store}>
+      <NavigationContainer>
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="Onboarding" component={OnboardingScreen} />
+          <Stack.Screen
+            name="Welcome"
+            component={WelcomeScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Login"
+            component={LoginScreen}
+            options={{
+              headerTitleStyle: {
+                display: "none",
+              },
+              headerLeft: () => {
+                return null;
+              },
+              headerBackVisible: false,
+            }}
+          />
+          <Stack.Screen name="HelloWorld" component={HelloWorldScreen} />
+        </Stack.Navigator>
+        <StatusBar />
+      </NavigationContainer>
+    </Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
