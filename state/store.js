@@ -1,16 +1,21 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { persistReducer, persistStore } from "redux-persist";
-import storage from "redux-persist/lib/storage";
+import logger from "redux-logger";
+import authSlice from "./reducers/authSlice";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const persistConfig = {
   key: "authentication",
-  storage,
-  whitelist: ["test"],
+  storage: AsyncStorage,
+  //   whitelist: ["test"],
 };
 const persistedReducer = persistReducer(persistConfig, authSlice);
 const combinedReducer = {
-  user: persistedReducer,
+  auth: persistedReducer,
 };
-
+const middlewares = [];
+if (__DEV__) {
+  middlewares.push(logger);
+}
 export const store = configureStore({
   reducer: combinedReducer,
   middleware: (getDefaultMiddleware) =>

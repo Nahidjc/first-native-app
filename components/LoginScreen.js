@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -6,9 +6,16 @@ import {
   TouchableOpacity,
   StyleSheet,
   Alert,
+  ActivityIndicator,
 } from "react-native";
 import { SvgUri } from "react-native-svg";
+import { useDispatch, useSelector } from "react-redux";
+import { createUserLogin } from "../state/reducers/authSlice";
 const LoginScreen = ({ navigation }) => {
+  const dispatch = useDispatch();
+  const { isLoading, isAuthenticated, errorMessage } = useSelector(
+    (state) => state.auth
+  );
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const handleSubmit = async () => {
@@ -16,8 +23,16 @@ const LoginScreen = ({ navigation }) => {
       Alert.alert("Error", "Please enter your email address");
       return;
     }
-    Alert.alert(email);
+    dispatch(createUserLogin({ email, password }));
   };
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigation.navigate("Welcome");
+    }
+    // if (errorMessage) {
+    //   Alert.alert("Login Failed", errorMessage);
+    // }
+  }, [isAuthenticated, errorMessage, navigation]);
   return (
     <View style={styles.container}>
       <Text style={styles.title}>What’s your{"\n"}email address?</Text>
@@ -45,7 +60,11 @@ const LoginScreen = ({ navigation }) => {
         disabled={!email && !password}
         onPress={handleSubmit}
       >
-        <Text style={styles.continueButtonText}>Login</Text>
+        {isLoading ? (
+          <ActivityIndicator color="#fff" />
+        ) : (
+          <Text style={styles.continueButtonText}>Login</Text>
+        )}
       </TouchableOpacity>
 
       <View style={styles.separatorContainer}>
