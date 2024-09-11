@@ -4,9 +4,10 @@ import logger from "redux-logger";
 import authSlice from "./reducers/authSlice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 const persistConfig = {
-  key: "authentication",
+  key: "root",
   storage: AsyncStorage,
-  //   whitelist: ["test"],
+  timeout: 400,
+  // whitelist: ["auth"],
 };
 const persistedReducer = persistReducer(persistConfig, authSlice);
 const combinedReducer = {

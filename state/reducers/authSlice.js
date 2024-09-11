@@ -82,36 +82,6 @@ const authSlice = createSlice({
       state.error = true;
       state.errorMessage = action.payload.data.message;
     });
-    builder.addCase(updateStudentProfile.pending, (state) => {
-      state.isLoading = true;
-      state.error = false;
-    });
-    builder.addCase(updateStudentProfile.fulfilled, (state, action) => {
-      const { user: previousUser } = state;
-      state.isLoading = false;
-      state.error = null;
-      state.updatedStudent = true;
-      state.user = { token: previousUser.token, ...action.payload };
-      state.errorMessage = "";
-    });
-    builder
-      .addCase(updateStudentProfile.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = true;
-      })
-      .addCase(getStudentDetails.pending, (state) => {
-        state.isLoading = true;
-        state.errorMessage = null;
-      })
-      .addCase(getStudentDetails.fulfilled, (state, action) => {
-        const { user: previousUser } = state;
-        state.isLoading = false;
-        state.user = { token: previousUser.token, ...action.payload };
-      })
-      .addCase(getStudentDetails.rejected, (state, action) => {
-        state.isLoading = false;
-        state.errorMessage = action.payload.data.message;
-      });
   },
 });
 

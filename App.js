@@ -12,14 +12,20 @@ import LoginScreen from "./components/LoginScreen";
 import WelcomeScreen from "./components/WelcomeScreen";
 import OnboardingScreen from "./Screen/OnboardingScreen";
 import { Ionicons } from "@expo/vector-icons";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
-
+import {
+  ActivityIndicator,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { persistStore } from "redux-persist";
+import { PersistGate } from "redux-persist/integration/react";
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const AppNavigator = () => {
   const { isAuthenticated } = useSelector((state) => state.auth);
-
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       {isAuthenticated ? (
@@ -78,13 +84,22 @@ const MainTabs = () => {
   );
 };
 
+const LoadingScreen = () => (
+  <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+    <ActivityIndicator size="large" color="#6c5ce7" />
+    <Text>Loading...</Text>
+  </View>
+);
 export default function App() {
+  let persistor = persistStore(store);
   return (
     <Provider store={store}>
-      <NavigationContainer>
-        <AppNavigator />
-        <StatusBar />
-      </NavigationContainer>
+      <PersistGate loading={<LoadingScreen />} persistor={persistor}>
+        <NavigationContainer>
+          <AppNavigator />
+          <StatusBar />
+        </NavigationContainer>
+      </PersistGate>
     </Provider>
   );
 }
