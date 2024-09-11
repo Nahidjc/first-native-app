@@ -25,14 +25,14 @@ const LoginScreen = ({ navigation }) => {
     }
     dispatch(createUserLogin({ email, password }));
   };
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigation.navigate("Welcome");
-    }
-    // if (errorMessage) {
-    //   Alert.alert("Login Failed", errorMessage);
-    // }
-  }, [isAuthenticated, errorMessage, navigation]);
+  // useEffect(() => {
+  //   if (isAuthenticated) {
+  //     navigation.navigate("HelloWorld");
+  //   }
+  //   // if (errorMessage) {
+  //   //   Alert.alert("Login Failed", errorMessage);
+  //   // }
+  // }, [isAuthenticated, errorMessage, navigation]);
   return (
     <View style={styles.container}>
       <Text style={styles.title}>What’s your{"\n"}email address?</Text>

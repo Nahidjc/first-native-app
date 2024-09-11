@@ -2,42 +2,110 @@ import React from "react";
 import { Provider } from "react-redux";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { StatusBar } from "expo-status-bar";
+import { useSelector } from "react-redux";
+import { store } from "./state/store";
+import DashboardScreen from "./Screen/DashboardScreen";
 import HelloWorldScreen from "./components/HelloWorld";
 import LoginScreen from "./components/LoginScreen";
-import { StatusBar } from "expo-status-bar";
 import WelcomeScreen from "./components/WelcomeScreen";
 import OnboardingScreen from "./Screen/OnboardingScreen";
-import { store } from "./state/store";
+import { Ionicons } from "@expo/vector-icons";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
+
 const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
+
+const AppNavigator = () => {
+  const { isAuthenticated } = useSelector((state) => state.auth);
+
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      {isAuthenticated ? (
+        <Stack.Screen name="MainTabs" component={MainTabs} />
+      ) : (
+        <>
+          <Stack.Screen name="Onboarding" component={OnboardingScreen} />
+          <Stack.Screen name="Welcome" component={WelcomeScreen} />
+          <Stack.Screen name="Login" component={LoginScreen} />
+        </>
+      )}
+    </Stack.Navigator>
+  );
+};
+
+const CustomTabBarButton = ({ children, onPress }) => (
+  <TouchableOpacity style={styles.customTabButton} onPress={onPress}>
+    <View style={styles.customTabButtonContent}>{children}</View>
+  </TouchableOpacity>
+);
+
+const MainTabs = () => {
+  return (
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
+
+          if (route.name === "Home") {
+            iconName = focused ? "home" : "home-outline";
+          } else if (route.name === "Statistics") {
+            iconName = focused ? "stats-chart" : "stats-chart-outline";
+          }
+
+          // else if (route.name === "Chat") {
+          //   iconName = focused ? "chatbubble" : "chatbubble-outline";
+          // } else if (route.name === "Profile") {
+          //   iconName = focused ? "person" : "person-outline";
+          // }
+
+          return <Ionicons name={iconName} size={size} color={color} />;
+        },
+        tabBarActiveTintColor: "#7F3DFF",
+        tabBarInactiveTintColor: "#C6C6C6",
+        tabBarStyle: styles.tabBar,
+        tabBarShowLabel: false,
+        headerShown: false,
+        tabBarButton: (props) => <CustomTabBarButton {...props} />,
+      })}
+    >
+      <Tab.Screen name="Home" component={DashboardScreen} />
+      <Tab.Screen name="Statistics" component={HelloWorldScreen} />
+      {/* <Tab.Screen name="Chat" component={ChatScreen} />
+      <Tab.Screen name="Profile" component={ProfileScreen} /> */}
+    </Tab.Navigator>
+  );
+};
 
 export default function App() {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="Onboarding" component={OnboardingScreen} />
-          <Stack.Screen
-            name="Welcome"
-            component={WelcomeScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="Login"
-            component={LoginScreen}
-            options={{
-              headerTitleStyle: {
-                display: "none",
-              },
-              headerLeft: () => {
-                return null;
-              },
-              headerBackVisible: false,
-            }}
-          />
-          <Stack.Screen name="HelloWorld" component={HelloWorldScreen} />
-        </Stack.Navigator>
+        <AppNavigator />
         <StatusBar />
       </NavigationContainer>
     </Provider>
   );
 }
+
+const styles = StyleSheet.create({
+  tabBar: {
+    height: 60,
+    paddingBottom: 5,
+    paddingTop: 5,
+    backgroundColor: "#FFFFFF",
+    borderTopWidth: 1,
+    borderTopColor: "#E0E0E0",
+  },
+  customTabButton: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  customTabButtonContent: {
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 12,
+  },
+});
