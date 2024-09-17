@@ -21,6 +21,7 @@ import {
 } from "react-native";
 import { persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
+import SendMoneyScreen from "./Screen/SendMoneyScreen";
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -29,7 +30,10 @@ const AppNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       {isAuthenticated ? (
-        <Stack.Screen name="MainTabs" component={MainTabs} />
+        <>
+          <Stack.Screen name="MainTabs" component={MainTabs} />
+          <Stack.Screen name="SendMoney" component={SendMoneyScreen} />
+        </>
       ) : (
         <>
           <Stack.Screen name="Onboarding" component={OnboardingScreen} />

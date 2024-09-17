@@ -6,18 +6,19 @@ import {
   Image,
   Dimensions,
   ScrollView,
+  TouchableOpacity,
 } from "react-native";
 import Card from "../components/Card";
 import TransactionList from "../components/TransactionList";
 import { FontAwesome } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { useSelector } from "react-redux";
-
+import { useNavigation } from "@react-navigation/native";
 const { width, height } = Dimensions.get("window");
 
 const DashboardScreen = () => {
   const { user } = useSelector((state) => state.auth);
-
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <LinearGradient colors={["#CBF2FD", "#F4FAFB"]} style={styles.header}>
@@ -42,12 +43,15 @@ const DashboardScreen = () => {
         <Card />
         <View style={styles.gridContainer}>
           <View style={styles.gridItemContainer}>
-            <View style={styles.iconBox}>
+            <TouchableOpacity
+              style={styles.iconBox}
+              onPress={() => navigation.navigate("SendMoney")}
+            >
               <Image
                 source={require("../assets/icon/send.png")}
                 style={styles.iconImage}
               />
-            </View>
+            </TouchableOpacity>
             <Text style={styles.gridText}>Send</Text>
           </View>
 
