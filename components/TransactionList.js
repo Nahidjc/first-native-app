@@ -1,5 +1,13 @@
 import React from "react";
-import { View, Text, StyleSheet, FlatList, Image } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  Image,
+  Dimensions,
+} from "react-native";
+const { width, height } = Dimensions.get("window");
 
 const transactions = [
   {
@@ -26,7 +34,7 @@ const transactions = [
 ];
 
 const TransactionList = () => {
-  const renderItem = ({ item, index }) => (
+  const renderItem = ({ item }) => (
     <View style={styles.transactionItem}>
       <Image source={item.icon} style={styles.icon} />
       <View style={styles.details}>
@@ -69,21 +77,21 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#F5F5F5",
-    paddingHorizontal: 16,
-    paddingTop: 16,
+    paddingHorizontal: width * 0.04,
+    paddingTop: height * 0.02,
   },
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: 16,
+    marginBottom: height * 0.02,
   },
   headerText: {
-    fontSize: 20,
+    fontSize: width * 0.05,
     fontWeight: "bold",
   },
   headerFilter: {
-    fontSize: 14,
+    fontSize: width * 0.035,
     color: "#8E8E93",
   },
   listContainer: {
@@ -92,38 +100,38 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   listContent: {
-    paddingHorizontal: 16,
+    paddingHorizontal: width * 0.04,
   },
   sectionHeader: {
-    fontSize: 14,
+    fontSize: width * 0.035,
     color: "#8E8E93",
-    marginVertical: 12,
+    marginVertical: height * 0.01,
   },
   transactionItem: {
     flexDirection: "row",
     alignItems: "center",
-    paddingVertical: 12,
+    paddingVertical: height * 0.015,
   },
   icon: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    width: width * 0.1,
+    height: width * 0.1,
+    borderRadius: (width * 0.1) / 2,
   },
   details: {
     flex: 1,
-    marginLeft: 12,
+    marginLeft: width * 0.03,
   },
   transactionDescription: {
-    fontSize: 16,
+    fontSize: width * 0.04,
     fontWeight: "500",
   },
   transactionDate: {
-    fontSize: 14,
+    fontSize: width * 0.035,
     color: "#8E8E93",
-    marginTop: 4,
+    marginTop: height * 0.005,
   },
   transactionAmount: {
-    fontSize: 16,
+    fontSize: width * 0.04,
     fontWeight: "600",
   },
 });

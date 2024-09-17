@@ -1,17 +1,28 @@
-import React from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import React, { useState } from "react";
+import { View, Text, StyleSheet, Image, Pressable } from "react-native";
 
 const Card = () => {
+  const [balance, setBalance] = useState(85343);
+
+  const handleRefresh = () => {
+    setBalance((prevBalance) => prevBalance + Math.floor(Math.random() * 1000));
+  };
+
   return (
     <View style={styles.cardContainer}>
       <View style={styles.card}>
-        <Image
-          source={require("../assets/images/visa-logo.png")}
-          style={styles.logo}
-        />
-        <Text style={styles.cardTitle}>Visa Balance</Text>
-        <Text style={styles.cardBalance}>$50,000</Text>
-        <Text style={styles.cardNumber}>**** **** **** 1234</Text>
+        <Text style={styles.balanceLabel}>সর্বশেষ আপডেট ব্যালেন্স</Text>
+        <View style={styles.amountContainer}>
+          <Text style={styles.balanceAmount}>
+            ৳ {balance.toLocaleString("bn-BD")}
+          </Text>
+          <Pressable onPress={handleRefresh} style={styles.refreshButton}>
+            <Image
+              source={require("../assets/icon/refresh.png")}
+              style={styles.refreshIcon}
+            />
+          </Pressable>
+        </View>
       </View>
     </View>
   );
@@ -19,32 +30,42 @@ const Card = () => {
 
 const styles = StyleSheet.create({
   cardContainer: {
-    marginBottom: 20,
     paddingHorizontal: 20,
+    paddingTop: 20,
   },
   card: {
-    backgroundColor: "#a29bfe",
     borderRadius: 15,
-    padding: 20,
+    paddingVertical: 15,
+    paddingHorizontal: 20,
   },
-  logo: {
-    width: 70,
-    height: 20,
-    alignSelf: "flex-end",
-  },
-  cardTitle: {
-    color: "#fff",
+  balanceLabel: {
+    color: "#7c7c7c",
     fontSize: 16,
+    marginBottom: 5,
   },
-  cardBalance: {
-    color: "#fff",
-    fontSize: 30,
+  amountContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  balanceAmount: {
+    color: "#000",
+    fontSize: 24,
     fontWeight: "bold",
-    marginVertical: 10,
   },
-  cardNumber: {
-    color: "#fff",
-    fontSize: 14,
+  refreshButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: "#00bcd4",
+    justifyContent: "center",
+    alignItems: "center",
+    marginLeft: 10,
+  },
+  refreshIcon: {
+    width: 20,
+    height: 20,
+    tintColor: "#fff",
   },
 });
 

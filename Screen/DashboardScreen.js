@@ -1,16 +1,26 @@
 import React from "react";
-import { View, StyleSheet, Text, Image, ScrollView } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Text,
+  Image,
+  Dimensions,
+  ScrollView,
+} from "react-native";
 import Card from "../components/Card";
 import TransactionList from "../components/TransactionList";
 import { FontAwesome } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { useSelector } from "react-redux";
 
+const { width, height } = Dimensions.get("window");
+
 const DashboardScreen = () => {
   const { user } = useSelector((state) => state.auth);
+
   return (
     <View style={styles.container}>
-      <LinearGradient colors={["#9F64E8", "#642B9E"]} style={styles.header}>
+      <LinearGradient colors={["#CBF2FD", "#F4FAFB"]} style={styles.header}>
         <View style={styles.appBar}>
           <View style={styles.profileContainer}>
             <Image
@@ -18,8 +28,8 @@ const DashboardScreen = () => {
               style={styles.profileImage}
             />
             <View style={styles.textContainer}>
-              <Text style={styles.greeting}>Hi There, {user.ownerName}</Text>
-              <Text style={styles.subtitle}>Welcome back to RE-NEO</Text>
+              <Text style={styles.greeting}>{user.ownerName}</Text>
+              <Text style={styles.subtitle}>Welcome back to BD Pay</Text>
             </View>
           </View>
           <FontAwesome
@@ -30,38 +40,55 @@ const DashboardScreen = () => {
           />
         </View>
 
+        {/* Responsive Card */}
         <Card />
+
+        {/* Responsive Grid of Icons */}
         <View style={styles.gridContainer}>
           <View style={styles.gridItemContainer}>
             <View style={styles.iconBox}>
-              <FontAwesome name="send" size={24} color="#7334BD" />
+              <Image
+                source={require("../assets/icon/send.png")}
+                style={styles.iconImage}
+              />
             </View>
             <Text style={styles.gridText}>Send</Text>
           </View>
 
           <View style={styles.gridItemContainer}>
             <View style={styles.iconBox}>
-              <FontAwesome name="file" size={24} color="#7334BD" />
+              <Image
+                source={require("../assets/icon/cash-out.png")}
+                style={styles.iconImage}
+              />
             </View>
-            <Text style={styles.gridText}>Bills</Text>
+            <Text style={styles.gridText}>Cash Out</Text>
           </View>
 
           <View style={styles.gridItemContainer}>
             <View style={styles.iconBox}>
-              <FontAwesome name="shopping-cart" size={24} color="#7334BD" />
+              <Image
+                source={require("../assets/icon/payment.png")}
+                style={styles.iconImage}
+              />
             </View>
-            <Text style={styles.gridText}>Shop</Text>
+            <Text style={styles.gridText}>Payment</Text>
           </View>
 
           <View style={styles.gridItemContainer}>
             <View style={styles.iconBox}>
-              <FontAwesome name="qrcode" size={24} color="#7334BD" />
+              <Image
+                source={require("../assets/icon/add-money.png")}
+                style={styles.iconImage}
+              />
             </View>
-            <Text style={styles.gridText}>Scan</Text>
+            <Text style={styles.gridText}>Add Money</Text>
           </View>
         </View>
       </LinearGradient>
-      <TransactionList />
+      <ScrollView style={styles.scrollableSection}>
+        <TransactionList />
+      </ScrollView>
     </View>
   );
 };
@@ -72,6 +99,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#f5f5f5",
   },
   header: {
+    height: height * 0.5,
     paddingBottom: 30,
     borderBottomLeftRadius: 30,
     borderBottomRightRadius: 30,
@@ -80,13 +108,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingHorizontal: 20,
-    paddingVertical: 15,
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
+    paddingHorizontal: width * 0.05,
     paddingTop: 40,
   },
   profileContainer: {
@@ -94,23 +116,21 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   profileImage: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    marginRight: 10,
+    width: width * 0.1,
+    height: width * 0.1,
+    borderRadius: (width * 0.1) / 2,
   },
   textContainer: {
-    justifyContent: "center",
+    marginLeft: 10,
   },
   greeting: {
-    color: "white",
-    fontSize: 16,
-    fontWeight: "600",
+    color: "black",
+    fontWeight: "bold",
+    fontSize: width * 0.04,
   },
   subtitle: {
-    color: "white",
-    fontSize: 12,
-    fontWeight: "400",
+    color: "black",
+    fontSize: width * 0.03,
   },
   notificationIcon: {
     padding: 10,
@@ -119,43 +139,37 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
-    backgroundColor: "#fff",
     paddingVertical: 20,
-    paddingHorizontal: 15,
-    marginHorizontal: 20,
-    borderRadius: 15,
-    elevation: 3,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
+    paddingHorizontal: width * 0.05,
+    flexWrap: "wrap",
   },
   gridItemContainer: {
+    width: width * 0.22,
     alignItems: "center",
     justifyContent: "center",
   },
   iconBox: {
     backgroundColor: "#F1E6FE",
-    padding: 15,
+    padding: width * 0.04,
     borderRadius: 10,
     alignItems: "center",
     justifyContent: "center",
-    width: 60, // Width and height to create a square icon box
-    height: 60,
-    marginBottom: 5,
+    width: width * 0.15,
+    height: width * 0.15,
+  },
+  iconImage: {
+    width: width * 0.08,
+    height: width * 0.08,
   },
   gridText: {
     color: "#6c5ce7",
-    fontSize: 12,
+    fontSize: width * 0.03,
     fontWeight: "500",
     marginTop: 5,
   },
-  bottomSection: {
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
-    paddingTop: 30,
-    borderWidth: 1,
-    borderColor: "red",
+  scrollableSection: {
+    flex: 1,
+    marginTop: 20,
   },
 });
 
