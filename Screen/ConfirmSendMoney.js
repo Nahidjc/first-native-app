@@ -9,7 +9,7 @@ import {
   KeyboardAvoidingView,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-
+import { Avatar } from "react-native-elements";
 const { width } = Dimensions.get("window");
 const baseWidth = 375;
 const scale = width / baseWidth;
@@ -18,6 +18,13 @@ export default function ConfirmSendMoneyScreen({ route, navigation }) {
   const [amount, setAmount] = useState("");
   const { recipient } = route.params;
 
+  const handleAmountChange = (value) => {
+    const numericValue = parseInt(value, 10);
+    if (value === "" || (!isNaN(numericValue) && numericValue >= 1)) {
+      setAmount(value);
+    }
+  };
+  const isEnglishLetter = (char) => /^[A-Za-z]$/.test(char);
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -33,10 +40,16 @@ export default function ConfirmSendMoneyScreen({ route, navigation }) {
 
       <View style={styles.recipientContainer}>
         <View style={styles.avatar}>
-          <Text style={styles.avatarText}>{recipient.name[0]}</Text>
-          {/* <View style={styles.starIcon}>
-            <Ionicons name="star" size={14 * scale} color="#fff" />
-          </View> */}
+          {isEnglishLetter(recipient.name[0]) ? (
+            <Avatar
+              rounded
+              title={recipient.name[0]}
+              size={50 * scale}
+              containerStyle={{ backgroundColor: "#E1BEE7" }}
+            />
+          ) : (
+            <Ionicons name="person" size={25 * scale} color="white" />
+          )}
         </View>
         <View style={styles.recipientInfo}>
           <Text style={styles.recipientName}>{recipient.name}</Text>
@@ -44,22 +57,18 @@ export default function ConfirmSendMoneyScreen({ route, navigation }) {
         </View>
       </View>
 
-      <View style={styles.amountContainer}>
-        <Text style={styles.amount}>{`৳${amount || "0"}`}</Text>
-      </View>
-
-      <Text style={styles.balanceText}>ব্যবহারযোগ্য ব্যালেন্স: ৳10.15</Text>
-
-      <KeyboardAvoidingView behavior="padding" style={styles.keyboardContainer}>
+      <KeyboardAvoidingView behavior="padding" style={styles.amountContainer}>
         <TextInput
-          style={styles.amountInput}
+          style={styles.amount}
           value={amount}
-          onChangeText={setAmount}
+          onChangeText={handleAmountChange}
           keyboardType="numeric"
-          placeholder="৳0"
+          placeholder="5"
           placeholderTextColor="#999"
         />
       </KeyboardAvoidingView>
+
+      <Text style={styles.balanceText}>ব্যবহারযোগ্য ব্যালেন্স: ৳10.15</Text>
 
       <TouchableOpacity
         style={styles.confirmButton}
@@ -116,14 +125,6 @@ const styles = StyleSheet.create({
   avatarText: {
     fontSize: 18 * scale,
     color: "#fff",
-  },
-  starIcon: {
-    position: "absolute",
-    bottom: -2,
-    right: -2,
-    backgroundColor: "#E91E63",
-    borderRadius: 10,
-    padding: 4,
   },
   recipientInfo: {
     marginLeft: 10 * scale,

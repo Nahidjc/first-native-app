@@ -42,29 +42,27 @@ export default function SendMoneyScreen({ navigation }) {
   });
 
   const handleContactPress = (contact) => {
-    // Navigate to the ConfirmSendMoney screen with the selected contact's details
     navigation.navigate("ConfirmSendMoney", {
       recipient: {
         name: contact.name,
         number: contact.phoneNumbers[0]?.number,
-        avatar: contact.name[0], // Using the first letter as the avatar placeholder
+        avatar: contact.name[0],
       },
     });
   };
 
   const handleManualEntryPress = () => {
-    // If a search query exists but no contact is selected, treat it as manual entry
     if (searchQuery) {
       navigation.navigate("ConfirmSendMoney", {
         recipient: {
-          name: searchQuery, // Use the entered text as the recipient name/number
+          name: searchQuery,
           number: searchQuery,
-          avatar: searchQuery[0], // First letter of the query as avatar
+          avatar: searchQuery[0],
         },
       });
     }
   };
-
+  const isEnglishLetter = (char) => /^[A-Za-z]$/.test(char);
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -102,12 +100,18 @@ export default function SendMoneyScreen({ navigation }) {
             onPress={() => handleContactPress(item)}
             style={styles.contactItem}
           >
-            <Avatar
-              rounded
-              title={item.name[0]}
-              size={50 * scale}
-              containerStyle={{ backgroundColor: "#ccc" }}
-            />
+            <View style={styles.avatar}>
+              {isEnglishLetter(item.name[0]) ? (
+                <Avatar
+                  rounded
+                  title={item.name[0]}
+                  size={50 * scale}
+                  containerStyle={{ backgroundColor: "#E1BEE7" }}
+                />
+              ) : (
+                <Ionicons name="person" size={25 * scale} color="white" />
+              )}
+            </View>
             <View style={styles.contactDetails}>
               <Text style={styles.contactName}>{item.name}</Text>
               <Text style={styles.contactNumber}>
@@ -188,8 +192,8 @@ const styles = StyleSheet.create({
     paddingVertical: 14 * scale,
     paddingHorizontal: 10 * scale,
     marginBottom: 8 * scale,
-    borderBottomWidth: 1,
-    borderBottomColor: "#ccc",
+    // borderBottomWidth: 1,
+    // borderBottomColor: "#ccc",
   },
   contactDetails: {
     marginLeft: 12 * scale,
@@ -223,5 +227,14 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 16 * scale,
     fontWeight: "bold",
+  },
+  avatar: {
+    width: 50 * scale,
+    height: 50 * scale,
+    borderRadius: 25 * scale,
+    backgroundColor: "#E1BEE7",
+    justifyContent: "center",
+    alignItems: "center",
+    position: "relative",
   },
 });
