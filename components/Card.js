@@ -1,6 +1,13 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, Image, Pressable } from "react-native";
-
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  Pressable,
+  Dimensions,
+} from "react-native";
+const { width, height } = Dimensions.get("window");
 const Card = () => {
   const [balance, setBalance] = useState(85343);
 
@@ -30,18 +37,18 @@ const Card = () => {
 
 const styles = StyleSheet.create({
   cardContainer: {
-    paddingHorizontal: 20,
-    paddingTop: 20,
+    paddingHorizontal: width * 0.05,
+    paddingTop: height * 0.02,
   },
   card: {
-    borderRadius: 15,
-    paddingVertical: 15,
-    paddingHorizontal: 20,
+    borderRadius: width * 0.04,
+    paddingVertical: height * 0.02,
+    paddingHorizontal: width * 0.05,
   },
   balanceLabel: {
     color: "#7c7c7c",
-    fontSize: 16,
-    marginBottom: 5,
+    fontSize: width * 0.04,
+    marginBottom: height * 0.01,
   },
   amountContainer: {
     flexDirection: "row",
@@ -50,21 +57,21 @@ const styles = StyleSheet.create({
   },
   balanceAmount: {
     color: "#000",
-    fontSize: 24,
+    fontSize: width * 0.06,
     fontWeight: "bold",
   },
   refreshButton: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    width: width * 0.1,
+    height: width * 0.1,
+    borderRadius: (width * 0.1) / 2,
     backgroundColor: "#00bcd4",
     justifyContent: "center",
     alignItems: "center",
-    marginLeft: 10,
+    marginLeft: width * 0.025,
   },
   refreshIcon: {
-    width: 20,
-    height: 20,
+    width: width * 0.05,
+    height: width * 0.05,
     tintColor: "#fff",
   },
 });

@@ -39,11 +39,7 @@ const DashboardScreen = () => {
             style={styles.notificationIcon}
           />
         </View>
-
-        {/* Responsive Card */}
         <Card />
-
-        {/* Responsive Grid of Icons */}
         <View style={styles.gridContainer}>
           <View style={styles.gridItemContainer}>
             <View style={styles.iconBox}>
@@ -100,51 +96,51 @@ const styles = StyleSheet.create({
   },
   header: {
     height: height * 0.5,
-    paddingBottom: 30,
-    borderBottomLeftRadius: 30,
-    borderBottomRightRadius: 30,
+    paddingBottom: height * 0.03,
+    borderBottomLeftRadius: width * 0.08,
+    borderBottomRightRadius: width * 0.08,
   },
   appBar: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     paddingHorizontal: width * 0.05,
-    paddingTop: 40,
+    paddingTop: height * 0.05,
   },
   profileContainer: {
     flexDirection: "row",
     alignItems: "center",
   },
   profileImage: {
-    width: width * 0.1,
-    height: width * 0.1,
-    borderRadius: (width * 0.1) / 2,
+    width: width * 0.1, // Responsive width
+    height: width * 0.1, // Responsive height
+    borderRadius: (width * 0.1) / 2, // Circular image
   },
   textContainer: {
-    marginLeft: 10,
+    marginLeft: width * 0.03, // Responsive margin
   },
   greeting: {
     color: "black",
     fontWeight: "bold",
-    fontSize: width * 0.04,
+    fontSize: width * 0.04, // Responsive fontSize
   },
   subtitle: {
     color: "black",
-    fontSize: width * 0.03,
+    fontSize: width * 0.03, // Responsive fontSize
   },
   notificationIcon: {
-    padding: 10,
+    padding: width * 0.03, // Responsive padding
   },
   gridContainer: {
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
-    paddingVertical: 20,
-    paddingHorizontal: width * 0.05,
+    paddingVertical: height * 0.02, // Responsive paddingVertical
+    paddingHorizontal: width * 0.05, // Responsive paddingHorizontal
     flexWrap: "wrap",
   },
   gridItemContainer: {
-    width: width * 0.22,
+    width: width * 0.22, // Responsive width for grid items
     alignItems: "center",
     justifyContent: "center",
   },
@@ -154,22 +150,22 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: "center",
     justifyContent: "center",
-    width: width * 0.15,
-    height: width * 0.15,
+    width: width * 0.15, // Responsive width
+    height: width * 0.15, // Responsive height
   },
   iconImage: {
-    width: width * 0.08,
-    height: width * 0.08,
+    width: width * 0.08, // Responsive icon image width
+    height: width * 0.08, // Responsive icon image height
   },
   gridText: {
     color: "#6c5ce7",
-    fontSize: width * 0.03,
+    fontSize: width * 0.03, // Responsive fontSize
     fontWeight: "500",
-    marginTop: 5,
+    marginTop: height * 0.01, // Responsive marginTop
   },
   scrollableSection: {
     flex: 1,
-    marginTop: 20,
+    marginTop: height * 0.02, // Responsive marginTop
   },
 });
 
