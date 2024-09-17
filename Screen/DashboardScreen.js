@@ -95,8 +95,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#f5f5f5",
   },
   header: {
-    height: height * 0.5,
-    paddingBottom: height * 0.03,
+    height: height * 0.4,
+    paddingBottom: height * 0.04,
     borderBottomLeftRadius: width * 0.08,
     borderBottomRightRadius: width * 0.08,
   },

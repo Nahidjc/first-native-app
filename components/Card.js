@@ -38,7 +38,7 @@ const Card = () => {
 const styles = StyleSheet.create({
   cardContainer: {
     paddingHorizontal: width * 0.05,
-    paddingTop: height * 0.02,
+    paddingTop: height * 0.01,
   },
   card: {
     borderRadius: width * 0.04,
@@ -46,8 +46,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: width * 0.05,
   },
   balanceLabel: {
-    color: "#7c7c7c",
+    color: "#000",
     fontSize: width * 0.04,
+    fontWeight: "bold",
     marginBottom: height * 0.01,
   },
   amountContainer: {
