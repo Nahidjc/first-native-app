@@ -22,6 +22,7 @@ import {
 import { persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
 import SendMoneyScreen from "./Screen/SendMoneyScreen";
+import ConfirmSendMoneyScreen from "./Screen/ConfirmSendMoney";
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -33,6 +34,10 @@ const AppNavigator = () => {
         <>
           <Stack.Screen name="MainTabs" component={MainTabs} />
           <Stack.Screen name="SendMoney" component={SendMoneyScreen} />
+          <Stack.Screen
+            name="ConfirmSendMoney"
+            component={ConfirmSendMoneyScreen}
+          />
         </>
       ) : (
         <>

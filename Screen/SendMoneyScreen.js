@@ -42,7 +42,27 @@ export default function SendMoneyScreen({ navigation }) {
   });
 
   const handleContactPress = (contact) => {
-    navigation.navigate("ContactDetails", { contact });
+    // Navigate to the ConfirmSendMoney screen with the selected contact's details
+    navigation.navigate("ConfirmSendMoney", {
+      recipient: {
+        name: contact.name,
+        number: contact.phoneNumbers[0]?.number,
+        avatar: contact.name[0], // Using the first letter as the avatar placeholder
+      },
+    });
+  };
+
+  const handleManualEntryPress = () => {
+    // If a search query exists but no contact is selected, treat it as manual entry
+    if (searchQuery) {
+      navigation.navigate("ConfirmSendMoney", {
+        recipient: {
+          name: searchQuery, // Use the entered text as the recipient name/number
+          number: searchQuery,
+          avatar: searchQuery[0], // First letter of the query as avatar
+        },
+      });
+    }
   };
 
   return (
@@ -73,6 +93,7 @@ export default function SendMoneyScreen({ navigation }) {
           style={styles.searchInput}
         />
       </View>
+
       <FlatList
         data={filteredContacts}
         keyExtractor={(item, index) => index.toString()}
@@ -102,7 +123,7 @@ export default function SendMoneyScreen({ navigation }) {
             } -কে সেন্ড মানি করুন`}</Text>
             <TouchableOpacity
               style={styles.actionButton}
-              onPress={() => navigation.navigate("NextScreen")}
+              onPress={handleManualEntryPress} // Call manual entry handler
             >
               <Text style={styles.actionButtonText}>
                 পরের ধাপে যেতে ট্যাপ করুন
@@ -119,8 +140,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    // paddingHorizontal: 16 * scale,
-    // paddingTop: 10 * scale,
   },
   header: {
     backgroundColor: "#E91E63",
@@ -182,11 +201,6 @@ const styles = StyleSheet.create({
   },
   contactNumber: {
     fontSize: 14 * scale,
-    color: "#666",
-  },
-  emptyList: {
-    textAlign: "center",
-    marginTop: 20 * scale,
     color: "#666",
   },
   emptyContainer: {
