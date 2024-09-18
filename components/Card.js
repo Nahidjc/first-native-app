@@ -7,8 +7,10 @@ import {
   Pressable,
   Dimensions,
 } from "react-native";
+import { useTranslation } from "react-i18next";
 const { width, height } = Dimensions.get("window");
 const Card = () => {
+  const { t } = useTranslation(); 
   const [balance, setBalance] = useState(85343);
 
   const handleRefresh = () => {
@@ -18,7 +20,7 @@ const Card = () => {
   return (
     <View style={styles.cardContainer}>
       <View style={styles.card}>
-        <Text style={styles.balanceLabel}>সর্বশেষ আপডেট ব্যালেন্স</Text>
+      <Text style={styles.balanceLabel}>{t('balance_label')}</Text>
         <View style={styles.amountContainer}>
           <Text style={styles.balanceAmount}>
             ৳ {balance.toLocaleString("bn-BD")}

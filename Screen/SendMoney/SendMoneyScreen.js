@@ -9,8 +9,8 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { Avatar } from "react-native-elements";
-import { getContacts } from "../utilities/contactsHelpers";
-import { Ionicons } from "@expo/vector-icons"; // For icons
+import { getContacts } from "../../utilities/contactsHelpers";
+import { Ionicons } from "@expo/vector-icons";
 
 const { width } = Dimensions.get("window");
 const baseWidth = 375;

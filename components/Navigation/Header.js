@@ -17,7 +17,6 @@ const baseWidth = 375;
 const scale = width / baseWidth;
 
 const Header = ({ navigation, route, options }) => {
-  console.log(route);
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   const theme = useTheme();

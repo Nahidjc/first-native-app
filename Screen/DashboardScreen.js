@@ -86,9 +86,9 @@ const DashboardScreen = () => {
           </View>
         </View>
       </LinearGradient>
-      <ScrollView style={styles.scrollableSection}>
+      <View style={styles.scrollableSection}>
         <TransactionList />
-      </ScrollView>
+      </View>
     </View>
   );
 };
