@@ -23,13 +23,16 @@ import { persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
 import SendMoneyScreen from "./Screen/SendMoneyScreen";
 import ConfirmSendMoneyScreen from "./Screen/ConfirmSendMoney";
-const Stack = createStackNavigator();
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const AppNavigator = () => {
   const { isAuthenticated } = useSelector((state) => state.auth);
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator
+      screenOptions={{ headerShown: false, animation: "slide_from_right" }}
+    >
       {isAuthenticated ? (
         <>
           <Stack.Screen name="MainTabs" component={MainTabs} />
