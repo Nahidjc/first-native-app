@@ -5,7 +5,9 @@ import {
   Text,
   Image,
   Dimensions,
-  ScrollView,
+  LayoutAnimation,
+  UIManager,
+  Platform,
   TouchableOpacity,
 } from "react-native";
 import Card from "../components/Card";
@@ -16,9 +18,16 @@ import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 const { width, height } = Dimensions.get("window");
 
+if (Platform.OS === "android") {
+  UIManager.setLayoutAnimationEnabledExperimental &&
+    UIManager.setLayoutAnimationEnabledExperimental(true);
+}
 const DashboardScreen = () => {
   const { user } = useSelector((state) => state.auth);
   const navigation = useNavigation();
+  React.useEffect(() => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+  }, []);
   return (
     <View style={styles.container}>
       <LinearGradient colors={["#CBF2FD", "#F4FAFB"]} style={styles.header}>
