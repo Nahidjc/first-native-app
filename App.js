@@ -23,6 +23,7 @@ import { persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
 import SendMoneyScreen from "./Screen/SendMoney/SendMoneyScreen";
 import ConfirmSendMoneyScreen from "./Screen/SendMoney/ConfirmSendMoney";
+import SendMoney from "./Screen/SendMoney/SendMoney";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Header from "./components/Navigation/Header";
 import "./utilities/i18n";
@@ -46,7 +47,7 @@ const AppNavigator = () => {
               options={{
                 title: "সেন্ড মানি",
               }}
-              name={"SendMoney"}
+              name={"InitialSendMoney"}
               component={SendMoneyScreen}
             />
             <Stack.Screen
@@ -55,6 +56,13 @@ const AppNavigator = () => {
                 title: "সেন্ড মানি",
               }}
               component={ConfirmSendMoneyScreen}
+            />
+            <Stack.Screen
+              name="SendMoney"
+              options={{
+                title: "সেন্ড মানি",
+              }}
+              component={SendMoney}
             />
           </Stack.Group>
         </>

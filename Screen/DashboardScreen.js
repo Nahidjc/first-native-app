@@ -45,7 +45,7 @@ const DashboardScreen = () => {
           <View style={styles.gridItemContainer}>
             <TouchableOpacity
               style={styles.iconBox}
-              onPress={() => navigation.navigate("SendMoney")}
+              onPress={() => navigation.navigate("InitialSendMoney")}
             >
               <Image
                 source={require("../assets/icon/send.png")}

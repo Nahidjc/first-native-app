@@ -73,7 +73,10 @@ export default function ConfirmSendMoneyScreen({ route, navigation }) {
       <TouchableOpacity
         style={styles.confirmButton}
         onPress={() => {
-          /* Handle confirm action */
+          navigation.navigate('SendMoney', {
+            recipient,
+            amount,    
+          });
         }}
       >
         <Text style={styles.confirmButtonText}>এগিয়ে যান</Text>

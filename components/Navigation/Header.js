@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     marginTop: isModal ? 0 : insets.top,
     flexDirection: "row",
     alignItems: "center",
-    height: 62,
+    height: 65,
     backgroundColor: "#E91E63",
   }),
   button: (isModal) => ({

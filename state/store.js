@@ -14,9 +14,9 @@ const combinedReducer = {
   auth: persistedReducer,
 };
 const middlewares = [];
-if (__DEV__) {
-  middlewares.push(logger);
-}
+// if (__DEV__) {
+//   middlewares.push(logger);
+// }
 export const store = configureStore({
   reducer: combinedReducer,
   middleware: (getDefaultMiddleware) =>
