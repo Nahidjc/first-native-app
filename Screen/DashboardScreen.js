@@ -5,9 +5,6 @@ import {
   Text,
   Image,
   Dimensions,
-  LayoutAnimation,
-  UIManager,
-  Platform,
   TouchableOpacity,
 } from "react-native";
 import Card from "../components/Card";
@@ -18,16 +15,9 @@ import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 const { width, height } = Dimensions.get("window");
 
-if (Platform.OS === "android") {
-  UIManager.setLayoutAnimationEnabledExperimental &&
-    UIManager.setLayoutAnimationEnabledExperimental(true);
-}
 const DashboardScreen = () => {
   const { user } = useSelector((state) => state.auth);
   const navigation = useNavigation();
-  React.useEffect(() => {
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-  }, []);
   return (
     <View style={styles.container}>
       <LinearGradient colors={["#CBF2FD", "#F4FAFB"]} style={styles.header}>
@@ -125,35 +115,35 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   profileImage: {
-    width: width * 0.1, // Responsive width
-    height: width * 0.1, // Responsive height
-    borderRadius: (width * 0.1) / 2, // Circular image
+    width: width * 0.1,
+    height: width * 0.1,
+    borderRadius: (width * 0.1) / 2,
   },
   textContainer: {
-    marginLeft: width * 0.03, // Responsive margin
+    marginLeft: width * 0.03,
   },
   greeting: {
     color: "black",
     fontWeight: "bold",
-    fontSize: width * 0.04, // Responsive fontSize
+    fontSize: width * 0.04,
   },
   subtitle: {
     color: "black",
-    fontSize: width * 0.03, // Responsive fontSize
+    fontSize: width * 0.03,
   },
   notificationIcon: {
-    padding: width * 0.03, // Responsive padding
+    padding: width * 0.03,
   },
   gridContainer: {
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
-    paddingVertical: height * 0.02, // Responsive paddingVertical
-    paddingHorizontal: width * 0.05, // Responsive paddingHorizontal
+    paddingVertical: height * 0.02,
+    paddingHorizontal: width * 0.05,
     flexWrap: "wrap",
   },
   gridItemContainer: {
-    width: width * 0.22, // Responsive width for grid items
+    width: width * 0.22,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -163,22 +153,22 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: "center",
     justifyContent: "center",
-    width: width * 0.15, // Responsive width
-    height: width * 0.15, // Responsive height
+    width: width * 0.15,
+    height: width * 0.15,
   },
   iconImage: {
-    width: width * 0.08, // Responsive icon image width
-    height: width * 0.08, // Responsive icon image height
+    width: width * 0.08,
+    height: width * 0.08,
   },
   gridText: {
     color: "#6c5ce7",
-    fontSize: width * 0.03, // Responsive fontSize
+    fontSize: width * 0.03,
     fontWeight: "500",
-    marginTop: height * 0.01, // Responsive marginTop
+    marginTop: height * 0.01,
   },
   scrollableSection: {
     flex: 1,
-    marginTop: height * 0.02, // Responsive marginTop
+    marginTop: height * 0.02,
   },
 });
 
