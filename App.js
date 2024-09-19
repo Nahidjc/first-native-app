@@ -135,7 +135,7 @@ export default function App() {
       <PersistGate loading={<LoadingScreen />} persistor={persistor}>
         <NavigationContainer>
           <AppNavigator />
-          <StatusBar />
+          <StatusBar style="auto" />
         </NavigationContainer>
       </PersistGate>
     </Provider>

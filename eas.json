@@ -20,6 +20,11 @@
       "env": {
         "EXPO_PUBLIC_API_URL": "https://tech-haven.onrender.com/v1"
       }
+    },
+    "test": {
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://tech-haven.onrender.com/v1"
+      }
     }
   },
   "submit": {
