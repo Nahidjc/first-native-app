@@ -27,7 +27,7 @@ export default function ConfirmSendMoneyScreen({ route, navigation }) {
   const isEnglishLetter = (char) => /^[A-Za-z]$/.test(char);
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
+      {/* <View style={styles.header}>
         <Ionicons
           name="arrow-back"
           size={24 * scale}
@@ -36,7 +36,7 @@ export default function ConfirmSendMoneyScreen({ route, navigation }) {
           style={styles.backIcon}
         />
         <Text style={styles.headerTitle}>সেন্ড মানি</Text>
-      </View>
+      </View> */}
 
       <View style={styles.recipientContainer}>
         <View style={styles.avatar}>
@@ -73,7 +73,10 @@ export default function ConfirmSendMoneyScreen({ route, navigation }) {
       <TouchableOpacity
         style={styles.confirmButton}
         onPress={() => {
-          /* Handle confirm action */
+          navigation.navigate('SendMoney', {
+            recipient,
+            amount,    
+          });
         }}
       >
         <Text style={styles.confirmButtonText}>এগিয়ে যান</Text>

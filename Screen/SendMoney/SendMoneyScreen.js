@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   View,
   TextInput,
@@ -9,8 +9,8 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { Avatar } from "react-native-elements";
-import { getContacts } from "../utilities/contactsHelpers";
-import { Ionicons } from "@expo/vector-icons"; // For icons
+import { getContacts } from "../../utilities/contactsHelpers";
+import { Ionicons } from "@expo/vector-icons";
 
 const { width } = Dimensions.get("window");
 const baseWidth = 375;
@@ -65,7 +65,7 @@ export default function SendMoneyScreen({ navigation }) {
   const isEnglishLetter = (char) => /^[A-Za-z]$/.test(char);
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
+      {/* <View style={styles.header}>
         <Ionicons
           name="arrow-back"
           size={24 * scale}
@@ -74,7 +74,7 @@ export default function SendMoneyScreen({ navigation }) {
           style={styles.backIcon}
         />
         <Text style={styles.headerTitle}>সেন্ড মানি</Text>
-      </View>
+      </View> */}
 
       <View style={styles.searchContainer}>
         <Ionicons

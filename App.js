@@ -1,7 +1,6 @@
 import React from "react";
 import { Provider } from "react-redux";
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
+import { NavigationContainer, useTheme } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { StatusBar } from "expo-status-bar";
 import { useSelector } from "react-redux";
@@ -18,35 +17,62 @@ import {
   Text,
   TouchableOpacity,
   View,
+  LogBox,
 } from "react-native";
 import { persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
-import SendMoneyScreen from "./Screen/SendMoneyScreen";
-import ConfirmSendMoneyScreen from "./Screen/ConfirmSendMoney";
+import SendMoneyScreen from "./Screen/SendMoney/SendMoneyScreen";
+import ConfirmSendMoneyScreen from "./Screen/SendMoney/ConfirmSendMoney";
+import SendMoney from "./Screen/SendMoney/SendMoney";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import Header from "./components/Navigation/Header";
+import "./utilities/i18n";
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
-
+LogBox.ignoreAllLogs();
 const AppNavigator = () => {
   const { isAuthenticated } = useSelector((state) => state.auth);
   return (
     <Stack.Navigator
-      screenOptions={{ headerShown: false, animation: "slide_from_right" }}
+      screenOptions={{ header: Header, animation: "slide_from_bottom" }}
     >
       {isAuthenticated ? (
         <>
-          <Stack.Screen name="MainTabs" component={MainTabs} />
-          <Stack.Screen name="SendMoney" component={SendMoneyScreen} />
-          <Stack.Screen
-            name="ConfirmSendMoney"
-            component={ConfirmSendMoneyScreen}
-          />
+          <Stack.Group screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="MainTabs" component={MainTabs} />
+          </Stack.Group>
+
+          <Stack.Group>
+            <Stack.Screen
+              options={{
+                title: "সেন্ড মানি",
+              }}
+              name={"InitialSendMoney"}
+              component={SendMoneyScreen}
+            />
+            <Stack.Screen
+              name="ConfirmSendMoney"
+              options={{
+                title: "সেন্ড মানি",
+              }}
+              component={ConfirmSendMoneyScreen}
+            />
+            <Stack.Screen
+              name="SendMoney"
+              options={{
+                title: "সেন্ড মানি",
+              }}
+              component={SendMoney}
+            />
+          </Stack.Group>
         </>
       ) : (
         <>
-          <Stack.Screen name="Onboarding" component={OnboardingScreen} />
-          <Stack.Screen name="Welcome" component={WelcomeScreen} />
-          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Group screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="Onboarding" component={OnboardingScreen} />
+            <Stack.Screen name="Welcome" component={WelcomeScreen} />
+            <Stack.Screen name="Login" component={LoginScreen} />
+          </Stack.Group>
         </>
       )}
     </Stack.Navigator>
@@ -109,7 +135,7 @@ export default function App() {
       <PersistGate loading={<LoadingScreen />} persistor={persistor}>
         <NavigationContainer>
           <AppNavigator />
-          <StatusBar />
+          <StatusBar style="auto" />
         </NavigationContainer>
       </PersistGate>
     </Provider>
