@@ -65,16 +65,6 @@ export default function SendMoneyScreen({ navigation }) {
   const isEnglishLetter = (char) => /^[A-Za-z]$/.test(char);
   return (
     <View style={styles.container}>
-      {/* <View style={styles.header}>
-        <Ionicons
-          name="arrow-back"
-          size={24 * scale}
-          color="#fff"
-          onPress={() => navigation.goBack()}
-          style={styles.backIcon}
-        />
-        <Text style={styles.headerTitle}>সেন্ড মানি</Text>
-      </View> */}
 
       <View style={styles.searchContainer}>
         <Ionicons
