@@ -1,26 +1,15 @@
 import React from "react";
-import { Provider } from "react-redux";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { StatusBar } from "expo-status-bar";
 import { useSelector } from "react-redux";
-import { store } from "./state/store";
 import DashboardScreen from "./Screen/DashboardScreen";
 import HelloWorldScreen from "./components/HelloWorld";
 import LoginScreen from "./components/LoginScreen";
 import WelcomeScreen from "./components/WelcomeScreen";
 import OnboardingScreen from "./Screen/OnboardingScreen";
 import { Ionicons } from "@expo/vector-icons";
-import {
-  ActivityIndicator,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  LogBox,
-} from "react-native";
-import { persistStore } from "redux-persist";
-import { PersistGate } from "redux-persist/integration/react";
+import { StyleSheet, TouchableOpacity, View, LogBox } from "react-native";
 import SendMoneyScreen from "./Screen/SendMoney/SendMoneyScreen";
 import ConfirmSendMoneyScreen from "./Screen/SendMoney/ConfirmSendMoney";
 import SendMoney from "./Screen/SendMoney/SendMoney";
@@ -122,23 +111,12 @@ const MainTabs = () => {
   );
 };
 
-const LoadingScreen = () => (
-  <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-    <ActivityIndicator size="large" color="#6c5ce7" />
-    <Text>Loading...</Text>
-  </View>
-);
 export default function App() {
-  let persistor = persistStore(store);
   return (
-    <Provider store={store}>
-      <PersistGate loading={<LoadingScreen />} persistor={persistor}>
-        <NavigationContainer>
-          <AppNavigator />
-          <StatusBar style="auto" />
-        </NavigationContainer>
-      </PersistGate>
-    </Provider>
+    <NavigationContainer>
+      <AppNavigator />
+      <StatusBar style="auto" />
+    </NavigationContainer>
   );
 }
 
