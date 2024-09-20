@@ -49,7 +49,7 @@ const Header = ({ navigation, route, options, tabName, user }) => {
             />
             <View style={styles.textContainer}>
               <Text style={styles.greeting}>{user.ownerName}</Text>
-              <Text style={styles.subtitle}>Welcome back to BD Pay</Text>
+              <Text style={styles.subtitle}>{t("welcome")}</Text>
             </View>
           </View>
         ) : (
