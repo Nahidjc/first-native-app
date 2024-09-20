@@ -83,9 +83,11 @@ const Header = ({ navigation, route, options, tabName, user }) => {
             )}
           </>
         )}
-        <Pressable onPress={openMenu} style={styles.menuButton}>
-          <Ionicons name="menu" size={24} color="white" />
-        </Pressable>
+        {(tabName === "Dashboard" || tabName === "Statistics") && (
+          <Pressable onPress={openMenu} style={styles.menuButton}>
+            <Ionicons name="menu" size={24} color="white" />
+          </Pressable>
+        )}
       </View>
     </SafeAreaView>
   );
@@ -100,7 +102,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     height: 50,
     paddingHorizontal: 10,
-    backgroundColor: "#E91E63", 
+    backgroundColor: "#E91E63",
   },
   button: {
     borderRadius: 16,

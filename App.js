@@ -1,5 +1,6 @@
 import React from "react";
-import { NavigationContainer, useNavigation } from "@react-navigation/native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { StatusBar } from "expo-status-bar";
 import { useSelector } from "react-redux";
@@ -17,9 +18,27 @@ import SendMoney from "./Screen/SendMoney/SendMoney";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Header from "./components/Navigation/Header";
 import "./utilities/i18n";
+import { CustomDrawerContent } from "./components/Drawer/CustomDrawerContent";
+
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 LogBox.ignoreAllLogs();
+
+const Drawer = createDrawerNavigator();
+const DrawerNavigator = () => {
+  return (
+    <Drawer.Navigator
+      drawerContent={(props) => <CustomDrawerContent {...props} />}
+      screenOptions={{
+        drawerType: "front",
+        drawerPosition: "right",
+        headerShown: false,
+      }}
+    >
+      <Drawer.Screen name="MainTabs" component={MainTabs} />
+    </Drawer.Navigator>
+  );
+};
 
 const CustomTabBarButton = ({ children, onPress }) => (
   <TouchableOpacity style={styles.customTabButton} onPress={onPress}>
@@ -90,12 +109,9 @@ export default function App() {
             <>
               <Stack.Group>
                 <Stack.Screen
-                  name="MainTabs"
-                  component={MainTabs}
-                  options={{
-                    headerShown: false,
-                    header: (props) => <Header {...props} />,
-                  }}
+                  name="DrawerNavigator"
+                  component={DrawerNavigator}
+                  options={{ headerShown: false }}
                 />
               </Stack.Group>
 
