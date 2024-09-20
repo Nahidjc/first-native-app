@@ -9,7 +9,8 @@ import LoginScreen from "./components/LoginScreen";
 import WelcomeScreen from "./components/WelcomeScreen";
 import OnboardingScreen from "./Screen/OnboardingScreen";
 import { Ionicons } from "@expo/vector-icons";
-import { StyleSheet, TouchableOpacity, View, LogBox, Text } from "react-native";
+import { StyleSheet, TouchableOpacity, View, LogBox } from "react-native";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import SendMoneyScreen from "./Screen/SendMoney/SendMoneyScreen";
 import ConfirmSendMoneyScreen from "./Screen/SendMoney/ConfirmSendMoney";
 import SendMoney from "./Screen/SendMoney/SendMoney";
@@ -71,7 +72,13 @@ const MainTabs = () => {
 export default function App() {
   const { isAuthenticated } = useSelector((state) => state.auth);
   return (
-    <>
+    <SafeAreaProvider>
+      <StatusBar
+        style="auto"
+        translucent
+        backgroundColor="transparent"
+        barStyle="light-content"
+      />
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={{
@@ -127,8 +134,7 @@ export default function App() {
           )}
         </Stack.Navigator>
       </NavigationContainer>
-      <StatusBar style="auto" />
-    </>
+    </SafeAreaProvider>
   );
 }
 

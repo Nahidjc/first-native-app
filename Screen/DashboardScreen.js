@@ -9,7 +9,6 @@ import {
 } from "react-native";
 import Card from "../components/Card";
 import TransactionList from "../components/TransactionList";
-import { FontAwesome } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
