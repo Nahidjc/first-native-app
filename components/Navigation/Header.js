@@ -5,54 +5,71 @@ import {
   StatusBar,
   StyleSheet,
   Dimensions,
+  Image,
 } from "react-native";
 import React from "react";
 import { useTheme } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
-import Cross from "../../assets/svgs/cross.svg";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, FontAwesome } from "@expo/vector-icons"; // Import FontAwesome for bell icon
+
 const { width } = Dimensions.get("window");
 const baseWidth = 375;
 const scale = width / baseWidth;
 
-const Header = ({ navigation, route, options }) => {
+const Header = ({ navigation, route, options, user }) => {
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   const theme = useTheme();
   const backgroundColor =
     StyleSheet.flatten(options.headerStyle)?.backgroundColor ?? theme.white;
-  const isModal = options.presentation === "modal";
 
   const goBack = () => {
     const routes = navigation.getState()?.routes;
-    if (routes[routes.length - 2].name === "VerificationCode") {
+    if (routes[routes.length - 2]?.name === "VerificationCode") {
       navigation.pop(2);
     } else {
       navigation.goBack();
     }
   };
 
+  if (route.name === "Dashboard") {
+    return (
+      <View style={{ backgroundColor }}>
+        <StatusBar backgroundColor={backgroundColor} barStyle="dark-content" />
+        <View style={styles.appBar}>
+          <View style={styles.profileContainer}>
+            <Image
+              source={{ uri: user.shopLogo }}
+              style={styles.profileImage}
+            />
+            <View style={styles.textContainer}>
+              <Text style={styles.greeting}>{user.ownerName}</Text>
+              <Text style={styles.subtitle}>Welcome back to BD Pay</Text>
+            </View>
+          </View>
+          <FontAwesome name="bell" size={20} color="pink" />
+        </View>
+      </View>
+    );
+  }
+
   return (
     <View style={{ backgroundColor }}>
       <StatusBar backgroundColor={backgroundColor} barStyle="dark-content" />
-      <View style={styles.navigation(insets, isModal, backgroundColor)}>
+      <View style={styles.navigation(insets, backgroundColor)}>
         {navigation.canGoBack() && (
           <View style={{ flex: 1 }}>
             <Pressable
-              style={[styles.button(isModal), styles.backButton(isModal)]}
+              style={[styles.button, styles.backButton]}
               onPress={goBack}
             >
-              {isModal ? (
-                <Cross color={theme.white} />
-              ) : (
-                <Ionicons
-                  name="arrow-back"
-                  size={24 * scale}
-                  color="#fff"
-                  style={styles.backIcon}
-                />
-              )}
+              <Ionicons
+                name="arrow-back"
+                size={24 * scale}
+                color="#fff"
+                style={styles.backIcon}
+              />
             </Pressable>
           </View>
         )}
@@ -60,7 +77,7 @@ const Header = ({ navigation, route, options }) => {
           {t(options.title || route.name)}
         </Text>
         {options.headerRight && (
-          <View style={[styles.button(isModal), styles.rightButton]}>
+          <View style={[styles.button, styles.rightButton]}>
             {options.headerRight({ canGoBack: false })}
           </View>
         )}
@@ -72,26 +89,22 @@ const Header = ({ navigation, route, options }) => {
 export default Header;
 
 const styles = StyleSheet.create({
-  navigation: (insets, isModal, backgroundColor) => ({
-    marginTop: isModal ? 0 : insets.top,
+  navigation: (insets, backgroundColor) => ({
+    marginTop: insets.top,
     flexDirection: "row",
     alignItems: "center",
     height: 65,
     backgroundColor: "#E91E63",
   }),
-  button: (isModal) => ({
-    // height: isModal ? 35 : 48,
-    // borderWidth: 1,
-    // borderColor: "#E0E0E0",
-    borderRadius: isModal ? 12 : 16,
+  button: {
+    borderRadius: 16,
     zIndex: 1,
-  }),
-  backButton: (isModal) => ({
-    width: isModal ? 35 : 48,
-    // marginLeft: 16,
+  },
+  backButton: {
+    width: 48,
     justifyContent: "center",
     alignItems: "center",
-  }),
+  },
   rightButton: {
     marginRight: 16,
   },
@@ -109,5 +122,34 @@ const styles = StyleSheet.create({
     left: 16 * scale,
     top: "50%",
     transform: [{ translateY: -12 * scale }],
+  },
+  appBar: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: 16,
+    backgroundColor: "#E91E63",
+  },
+  profileContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  profileImage: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    marginRight: 10,
+  },
+  textContainer: {
+    flexDirection: "column",
+  },
+  greeting: {
+    fontSize: 16,
+    color: "white",
+    fontWeight: "bold",
+  },
+  subtitle: {
+    fontSize: 14,
+    color: "white",
   },
 });

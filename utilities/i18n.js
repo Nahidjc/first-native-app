@@ -7,6 +7,10 @@ const resources = {
       balance_label: "Last Updated Balance",
       header_title: "Header Title",
       some_other_key: "Some Other Text",
+      menu: "Menu",
+      home: "Home",
+      statement: "Statement",
+      logout: "Logout",
     },
   },
   bn: {
@@ -14,6 +18,10 @@ const resources = {
       balance_label: "সর্বশেষ আপডেট ব্যালেন্স",
       header_title: "হেডার শিরোনাম",
       some_other_key: "অন্যান্য টেক্সট",
+      menu: "মেনু",
+      home: "হোম",
+      statement: "স্টেটমেন্ট",
+      logout: "লগআউট",
     },
   },
 };

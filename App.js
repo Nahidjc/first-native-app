@@ -1,5 +1,5 @@
 import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { StatusBar } from "expo-status-bar";
 import { useSelector } from "react-redux";
@@ -19,54 +19,6 @@ import "./utilities/i18n";
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 LogBox.ignoreAllLogs();
-const AppNavigator = () => {
-  const { isAuthenticated } = useSelector((state) => state.auth);
-  return (
-    <Stack.Navigator
-      screenOptions={{ header: Header, animation: "slide_from_bottom" }}
-    >
-      {isAuthenticated ? (
-        <>
-          <Stack.Group screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="MainTabs" component={MainTabs} />
-          </Stack.Group>
-
-          <Stack.Group>
-            <Stack.Screen
-              options={{
-                title: "সেন্ড মানি",
-              }}
-              name={"InitialSendMoney"}
-              component={SendMoneyScreen}
-            />
-            <Stack.Screen
-              name="ConfirmSendMoney"
-              options={{
-                title: "সেন্ড মানি",
-              }}
-              component={ConfirmSendMoneyScreen}
-            />
-            <Stack.Screen
-              name="SendMoney"
-              options={{
-                title: "সেন্ড মানি",
-              }}
-              component={SendMoney}
-            />
-          </Stack.Group>
-        </>
-      ) : (
-        <>
-          <Stack.Group screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="Onboarding" component={OnboardingScreen} />
-            <Stack.Screen name="Welcome" component={WelcomeScreen} />
-            <Stack.Screen name="Login" component={LoginScreen} />
-          </Stack.Group>
-        </>
-      )}
-    </Stack.Navigator>
-  );
-};
 
 const CustomTabBarButton = ({ children, onPress }) => (
   <TouchableOpacity style={styles.customTabButton} onPress={onPress}>
@@ -86,13 +38,6 @@ const MainTabs = () => {
           } else if (route.name === "Statistics") {
             iconName = focused ? "stats-chart" : "stats-chart-outline";
           }
-
-          // else if (route.name === "Chat") {
-          //   iconName = focused ? "chatbubble" : "chatbubble-outline";
-          // } else if (route.name === "Profile") {
-          //   iconName = focused ? "person" : "person-outline";
-          // }
-
           return <Ionicons name={iconName} size={size} color={color} />;
         },
         tabBarActiveTintColor: "#7F3DFF",
@@ -105,18 +50,61 @@ const MainTabs = () => {
     >
       <Tab.Screen name="Home" component={DashboardScreen} />
       <Tab.Screen name="Statistics" component={HelloWorldScreen} />
-      {/* <Tab.Screen name="Chat" component={ChatScreen} />
-      <Tab.Screen name="Profile" component={ProfileScreen} /> */}
     </Tab.Navigator>
   );
 };
 
 export default function App() {
+  const { isAuthenticated } = useSelector((state) => state.auth);
   return (
-    <NavigationContainer>
-      <AppNavigator />
+    <>
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={{ header: Header, animation: "slide_from_bottom" }}
+        >
+          {isAuthenticated ? (
+            <>
+              <Stack.Group screenOptions={{ headerShown: false }}>
+                <Stack.Screen name="MainTabs" component={MainTabs} />
+              </Stack.Group>
+
+              <Stack.Group>
+                <Stack.Screen
+                  options={{
+                    title: "সেন্ড মানি",
+                  }}
+                  name={"InitialSendMoney"}
+                  component={SendMoneyScreen}
+                />
+                <Stack.Screen
+                  name="ConfirmSendMoney"
+                  options={{
+                    title: "সেন্ড মানি",
+                  }}
+                  component={ConfirmSendMoneyScreen}
+                />
+                <Stack.Screen
+                  name="SendMoney"
+                  options={{
+                    title: "সেন্ড মানি",
+                  }}
+                  component={SendMoney}
+                />
+              </Stack.Group>
+            </>
+          ) : (
+            <>
+              <Stack.Group screenOptions={{ headerShown: false }}>
+                <Stack.Screen name="Onboarding" component={OnboardingScreen} />
+                <Stack.Screen name="Welcome" component={WelcomeScreen} />
+                <Stack.Screen name="Login" component={LoginScreen} />
+              </Stack.Group>
+            </>
+          )}
+        </Stack.Navigator>
+      </NavigationContainer>
       <StatusBar style="auto" />
-    </NavigationContainer>
+    </>
   );
 }
 
