@@ -32,12 +32,7 @@ const DashboardScreen = () => {
               <Text style={styles.subtitle}>Welcome back to BD Pay</Text>
             </View>
           </View>
-          <FontAwesome
-            name="bell"
-            size={24}
-            color="white"
-            style={styles.notificationIcon}
-          />
+          <FontAwesome name="bell" size={20} color="pink" />
         </View>
         <Card />
         <View style={styles.gridContainer}>
@@ -130,9 +125,6 @@ const styles = StyleSheet.create({
   subtitle: {
     color: "black",
     fontSize: width * 0.03,
-  },
-  notificationIcon: {
-    padding: width * 0.03,
   },
   gridContainer: {
     flexDirection: "row",
