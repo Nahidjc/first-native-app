@@ -9,7 +9,7 @@ import LoginScreen from "./components/LoginScreen";
 import WelcomeScreen from "./components/WelcomeScreen";
 import OnboardingScreen from "./Screen/OnboardingScreen";
 import { Ionicons } from "@expo/vector-icons";
-import { StyleSheet, TouchableOpacity, View, LogBox } from "react-native";
+import { StyleSheet, TouchableOpacity, View, LogBox, Text } from "react-native";
 import SendMoneyScreen from "./Screen/SendMoney/SendMoneyScreen";
 import ConfirmSendMoneyScreen from "./Screen/SendMoney/ConfirmSendMoney";
 import SendMoney from "./Screen/SendMoney/SendMoney";
@@ -27,13 +27,13 @@ const CustomTabBarButton = ({ children, onPress }) => (
 );
 
 const MainTabs = () => {
+  const { user } = useSelector((state) => state.auth);
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
-
-          if (route.name === "Home") {
+          if (route.name === "Dashboard") {
             iconName = focused ? "home" : "home-outline";
           } else if (route.name === "Statistics") {
             iconName = focused ? "stats-chart" : "stats-chart-outline";
@@ -44,12 +44,26 @@ const MainTabs = () => {
         tabBarInactiveTintColor: "#C6C6C6",
         tabBarStyle: styles.tabBar,
         tabBarShowLabel: false,
-        headerShown: false,
+        headerShown: true,
         tabBarButton: (props) => <CustomTabBarButton {...props} />,
       })}
     >
-      <Tab.Screen name="Home" component={DashboardScreen} />
-      <Tab.Screen name="Statistics" component={HelloWorldScreen} />
+      <Tab.Screen
+        name="Dashboard"
+        component={DashboardScreen}
+        options={{
+          header: (props) => (
+            <Header {...props} tabName="Dashboard" user={user} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Statistics"
+        component={HelloWorldScreen}
+        options={{
+          header: (props) => <Header {...props} tabName="Statistics" />,
+        }}
+      />
     </Tab.Navigator>
   );
 };
@@ -60,12 +74,22 @@ export default function App() {
     <>
       <NavigationContainer>
         <Stack.Navigator
-          screenOptions={{ header: Header, animation: "slide_from_bottom" }}
+          screenOptions={{
+            header: (props) => <Header {...props} />,
+            animation: "slide_from_bottom",
+          }}
         >
           {isAuthenticated ? (
             <>
-              <Stack.Group screenOptions={{ headerShown: false }}>
-                <Stack.Screen name="MainTabs" component={MainTabs} />
+              <Stack.Group>
+                <Stack.Screen
+                  name="MainTabs"
+                  component={MainTabs}
+                  options={{
+                    headerShown: false,
+                    header: (props) => <Header {...props} />,
+                  }}
+                />
               </Stack.Group>
 
               <Stack.Group>

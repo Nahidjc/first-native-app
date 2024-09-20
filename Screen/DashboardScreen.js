@@ -21,19 +21,6 @@ const DashboardScreen = () => {
   return (
     <View style={styles.container}>
       <LinearGradient colors={["#CBF2FD", "#F4FAFB"]} style={styles.header}>
-        <View style={styles.appBar}>
-          <View style={styles.profileContainer}>
-            <Image
-              source={{ uri: user.shopLogo }}
-              style={styles.profileImage}
-            />
-            <View style={styles.textContainer}>
-              <Text style={styles.greeting}>{user.ownerName}</Text>
-              <Text style={styles.subtitle}>Welcome back to BD Pay</Text>
-            </View>
-          </View>
-          <FontAwesome name="bell" size={20} color="pink" />
-        </View>
         <Card />
         <View style={styles.gridContainer}>
           <View style={styles.gridItemContainer}>
@@ -97,25 +84,6 @@ const styles = StyleSheet.create({
     paddingBottom: height * 0.04,
     borderBottomLeftRadius: width * 0.08,
     borderBottomRightRadius: width * 0.08,
-  },
-  appBar: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingHorizontal: width * 0.05,
-    paddingTop: height * 0.05,
-  },
-  profileContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  profileImage: {
-    width: width * 0.1,
-    height: width * 0.1,
-    borderRadius: (width * 0.1) / 2,
-  },
-  textContainer: {
-    marginLeft: width * 0.03,
   },
   greeting: {
     color: "black",

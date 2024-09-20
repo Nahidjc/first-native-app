@@ -17,7 +17,7 @@ const { width } = Dimensions.get("window");
 const baseWidth = 375;
 const scale = width / baseWidth;
 
-const Header = ({ navigation, route, options, user }) => {
+const Header = ({ navigation, route, options, tabName ,user}) => {
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   const theme = useTheme();
@@ -33,10 +33,10 @@ const Header = ({ navigation, route, options, user }) => {
     }
   };
 
-  if (route.name === "Dashboard") {
+  if (tabName === "Dashboard") {
     return (
       <View style={{ backgroundColor }}>
-        <StatusBar backgroundColor={backgroundColor} barStyle="dark-content" />
+        <StatusBar style="auto" />
         <View style={styles.appBar}>
           <View style={styles.profileContainer}>
             <Image
@@ -56,7 +56,6 @@ const Header = ({ navigation, route, options, user }) => {
 
   return (
     <View style={{ backgroundColor }}>
-      <StatusBar backgroundColor={backgroundColor} barStyle="dark-content" />
       <View style={styles.navigation(insets, backgroundColor)}>
         {navigation.canGoBack() && (
           <View style={{ flex: 1 }}>
