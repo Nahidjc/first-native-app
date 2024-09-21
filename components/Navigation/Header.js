@@ -83,7 +83,7 @@ const Header = ({ navigation, route, options, tabName, user }) => {
             )}
           </>
         )}
-        {(tabName === "Dashboard" || tabName === "Statistics") && (
+        {(tabName === "Dashboard" || tabName === "Statements") && (
           <Pressable onPress={openMenu} style={styles.menuButton}>
             <Ionicons name="menu" size={24} color="white" />
           </Pressable>
@@ -102,7 +102,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     height: 50,
     paddingHorizontal: 10,
-    backgroundColor: "#E91E63",
   },
   button: {
     borderRadius: 16,

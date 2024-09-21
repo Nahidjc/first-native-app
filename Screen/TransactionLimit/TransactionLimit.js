@@ -260,7 +260,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#F5F5F5",
-    padding: width * 0.04, // Ensure consistent margin on all sides
+    padding: width * 0.04,
   },
   paperContainer: {
     flex: 1,
