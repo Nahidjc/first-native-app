@@ -9,13 +9,17 @@ import {
 } from "react-native";
 import { useTranslation } from "react-i18next";
 import { useCurrencyFormatter } from "../utilities/helper/useCurrencyFormatter";
+
 const { width, height } = Dimensions.get("window");
+
 const Card = () => {
   const [balance, setBalance] = useState(85343);
-  const { t, i18n } = useTranslation();
+  const [showBalance, setShowBalance] = useState(false);
+  const { t } = useTranslation();
   const formatCurrency = useCurrencyFormatter();
+
   const handleRefresh = () => {
-    setBalance((prevBalance) => prevBalance + Math.floor(Math.random() * 1000));
+    setShowBalance(!showBalance);
   };
 
   return (
@@ -23,7 +27,9 @@ const Card = () => {
       <View style={styles.card}>
         <Text style={styles.balanceLabel}>{t("balance_label")}</Text>
         <View style={styles.amountContainer}>
-          <Text style={styles.balanceAmount}>৳ {formatCurrency(balance)}</Text>
+          <Text style={styles.balanceAmount}>
+            {showBalance ? `৳ ${formatCurrency(balance)}` : "৳ ****"}
+          </Text>
           <Pressable onPress={handleRefresh} style={styles.refreshButton}>
             <Image
               source={require("../assets/icon/refresh.png")}
