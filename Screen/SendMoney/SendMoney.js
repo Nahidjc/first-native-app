@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { Avatar } from "react-native-elements";
 import { Ionicons } from "@expo/vector-icons";
+import SendMoneyModal from "./SendMoneyModal";
 
 const { width } = Dimensions.get("window");
 const baseWidth = 375;
@@ -17,6 +18,7 @@ const scale = width / baseWidth;
 export default function SendMoney({ route }) {
   const { recipient, amount } = route.params;
   const [pin, setPin] = useState("");
+  const [isModalVisible, setModalVisible] = useState(false);
   const pinLength = 4;
   const isEnglishLetter = (char) => /^[A-Za-z]$/.test(char);
   const handlePinChange = (text) => {
@@ -30,8 +32,12 @@ export default function SendMoney({ route }) {
       setReference(text);
     }
   };
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
   return (
     <View style={styles.container}>
+      <SendMoneyModal visible={isModalVisible} onClose={toggleModal} />
       <View style={styles.recipientCard}>
         <Text style={styles.toText}>প্রাপক</Text>
         <View style={styles.recipientContainer}>
@@ -111,6 +117,7 @@ export default function SendMoney({ route }) {
           pin.length === pinLength ? styles.activeConfirmButton : {},
         ]}
         disabled={pin.length !== pinLength}
+        onPress={() => setModalVisible(true)}
       >
         <Text style={styles.confirmButtonText}>পিন কনফার্ম করুন</Text>
         <Ionicons name="arrow-forward" size={24 * scale} color="#fff" />
