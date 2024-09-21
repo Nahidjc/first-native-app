@@ -45,7 +45,7 @@ export const CustomDrawerContent = ({ navigation }) => {
 
         <TouchableOpacity
           style={styles.menuItem}
-          onPress={() => navigation.navigate("Statistics")}
+          onPress={() => navigation.navigate("Statements")}
         >
           <Text style={styles.menuIcon}>📊</Text>
           <Text style={styles.menuText}>{t("statement")}</Text>

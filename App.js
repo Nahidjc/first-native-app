@@ -20,6 +20,7 @@ import Header from "./components/Navigation/Header";
 import "./utilities/i18n";
 import { CustomDrawerContent } from "./components/Drawer/CustomDrawerContent";
 import { TransactionLimitScreen } from "./Screen/TransactionLimit/TransactionLimit";
+import StatementScreen from "./Screen/Transaction/Transaction";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -42,6 +43,9 @@ const DrawerNavigator = () => {
         component={TransactionLimitScreen}
         options={{
           headerShown: true,
+          headerStyle: {
+            backgroundColor: "#E91E63",
+          },
           header: (props) => <Header {...props} title="Limit" />,
         }}
       />
@@ -64,7 +68,7 @@ const MainTabs = () => {
           let iconName;
           if (route.name === "Dashboard") {
             iconName = focused ? "home" : "home-outline";
-          } else if (route.name === "Statistics") {
+          } else if (route.name === "Statements") {
             iconName = focused ? "stats-chart" : "stats-chart-outline";
           }
           return <Ionicons name={iconName} size={size} color={color} />;
@@ -81,16 +85,22 @@ const MainTabs = () => {
         name="Dashboard"
         component={DashboardScreen}
         options={{
+          headerStyle: {
+            backgroundColor: "#E91E63",
+          },
           header: (props) => (
             <Header {...props} tabName="Dashboard" user={user} />
           ),
         }}
       />
       <Tab.Screen
-        name="Statistics"
-        component={HelloWorldScreen}
+        name="Statements"
+        component={StatementScreen}
         options={{
-          header: (props) => <Header {...props} tabName="Statistics" />,
+          headerStyle: {
+            backgroundColor: "#E91E63",
+          },
+          header: (props) => <Header {...props} tabName="Statements" />,
         }}
       />
     </Tab.Navigator>
@@ -120,7 +130,9 @@ export default function App() {
                 <Stack.Screen
                   name="DrawerNavigator"
                   component={DrawerNavigator}
-                  options={{ headerShown: false }}
+                  options={{
+                    headerShown: false,
+                  }}
                 />
               </Stack.Group>
 
