@@ -38,6 +38,7 @@ const SendMoneyModal = ({ visible, onClose }) => {
 
   const completeMethod = () => {
     console.log("Send money complete");
+    setProgress(0);
     onClose();
   };
 

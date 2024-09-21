@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import {
   View,
   Text,
@@ -35,6 +35,7 @@ export default function SendMoney({ route }) {
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
+
   return (
     <View style={styles.container}>
       <SendMoneyModal visible={isModalVisible} onClose={toggleModal} />
