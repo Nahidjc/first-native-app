@@ -19,6 +19,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Header from "./components/Navigation/Header";
 import "./utilities/i18n";
 import { CustomDrawerContent } from "./components/Drawer/CustomDrawerContent";
+import { TransactionLimitScreen } from "./Screen/TransactionLimit/TransactionLimit";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -36,6 +37,14 @@ const DrawerNavigator = () => {
       }}
     >
       <Drawer.Screen name="MainTabs" component={MainTabs} />
+      <Drawer.Screen
+        name="Limit"
+        component={TransactionLimitScreen}
+        options={{
+          headerShown: true,
+          header: (props) => <Header {...props} title="Limit" />,
+        }}
+      />
     </Drawer.Navigator>
   );
 };
@@ -102,7 +111,7 @@ export default function App() {
         <Stack.Navigator
           screenOptions={{
             header: (props) => <Header {...props} />,
-            animation: "slide_from_bottom",
+            animation: "slide_from_right",
           }}
         >
           {isAuthenticated ? (
