@@ -151,7 +151,7 @@ const TransactionItem = ({ item }) => (
     <Ionicons
       name="person-circle-outline"
       size={40}
-      color="#999"
+      color="#E1BEE7"
       style={styles.avatar}
     />
     <View style={styles.transactionDetails}>
@@ -254,7 +254,7 @@ const styles = StyleSheet.create({
     marginVertical: 15,
   },
   filterLabel: {
-    fontSize: 16,
+    fontSize: 14,
     color: "#666",
     marginRight: 10,
   },
@@ -277,12 +277,12 @@ const styles = StyleSheet.create({
   filterButtonTextIn: {
     color: "green",
     fontWeight: "bold",
-    fontSize: 16,
+    fontSize: 14,
   },
   filterButtonTextOut: {
     color: "red",
     fontWeight: "bold",
-    fontSize: 16,
+    fontSize: 14,
   },
   transactionContainer: {
     flexDirection: "row",
@@ -302,13 +302,15 @@ const styles = StyleSheet.create({
   },
   transactionType: {
     fontWeight: "bold",
-    fontSize: 14,
+    fontSize: width * 0.04,
   },
   transactionName: {
     color: "#666",
+    fontSize: width * 0.03,
   },
   transactionInfo: {
     color: "#999",
+    fontSize: width * 0.03,
   },
   transactionAmountContainer: {
     justifyContent: "center",
@@ -316,14 +318,17 @@ const styles = StyleSheet.create({
   },
   amountPositive: {
     color: "green",
+    fontSize: width * 0.04,
     fontWeight: "bold",
   },
   amountNegative: {
     color: "red",
+    fontSize: width * 0.04,
     fontWeight: "bold",
   },
   transactionCharge: {
     color: "#999",
+    fontSize: width * 0.034,
   },
   tabIndicator: {
     backgroundColor: "red",
@@ -332,7 +337,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   tabLabel: {
-    fontSize: 12,
+    fontSize: width * 0.028,
   },
 });
 
