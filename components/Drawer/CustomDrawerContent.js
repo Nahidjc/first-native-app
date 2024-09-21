@@ -51,7 +51,10 @@ export const CustomDrawerContent = ({ navigation }) => {
           <Text style={styles.menuText}>{t("statement")}</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.menuItem} onPress={() => {}}>
+        <TouchableOpacity
+          style={styles.menuItem}
+          onPress={() => navigation.navigate("Limit")}
+        >
           <Text style={styles.menuIcon}>⚠️</Text>
           <Text style={styles.menuText}>{t("limit")}</Text>
         </TouchableOpacity>
