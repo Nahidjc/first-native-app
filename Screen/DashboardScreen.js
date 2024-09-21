@@ -12,10 +12,12 @@ import TransactionList from "../components/TransactionList";
 import { LinearGradient } from "expo-linear-gradient";
 import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
 const { width, height } = Dimensions.get("window");
 
 const DashboardScreen = () => {
   const { user } = useSelector((state) => state.auth);
+  const { t } = useTranslation();
   const navigation = useNavigation();
   return (
     <View style={styles.container}>
@@ -32,7 +34,7 @@ const DashboardScreen = () => {
                 style={styles.iconImage}
               />
             </TouchableOpacity>
-            <Text style={styles.gridText}>Send</Text>
+            <Text style={styles.gridText}>{t("send")}</Text>
           </View>
 
           <View style={styles.gridItemContainer}>
@@ -42,7 +44,7 @@ const DashboardScreen = () => {
                 style={styles.iconImage}
               />
             </View>
-            <Text style={styles.gridText}>Cash Out</Text>
+            <Text style={styles.gridText}>{t("cashOut")}</Text>
           </View>
 
           <View style={styles.gridItemContainer}>
@@ -52,7 +54,7 @@ const DashboardScreen = () => {
                 style={styles.iconImage}
               />
             </View>
-            <Text style={styles.gridText}>Payment</Text>
+            <Text style={styles.gridText}>{t("payment")}</Text>
           </View>
 
           <View style={styles.gridItemContainer}>
@@ -62,7 +64,7 @@ const DashboardScreen = () => {
                 style={styles.iconImage}
               />
             </View>
-            <Text style={styles.gridText}>Add Money</Text>
+            <Text style={styles.gridText}>{t("addMoney")}</Text>
           </View>
         </View>
       </LinearGradient>
@@ -79,7 +81,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#f5f5f5",
   },
   header: {
-    height: height * 0.4,
+    height: height * 0.3,
     paddingBottom: height * 0.04,
     borderBottomLeftRadius: width * 0.08,
     borderBottomRightRadius: width * 0.08,
