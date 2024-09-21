@@ -140,6 +140,9 @@ export default function App() {
                 <Stack.Screen
                   options={{
                     title: "সেন্ড মানি",
+                    headerStyle: {
+                      backgroundColor: "#E91E63",
+                    },
                   }}
                   name={"InitialSendMoney"}
                   component={SendMoneyScreen}
@@ -148,6 +151,9 @@ export default function App() {
                   name="ConfirmSendMoney"
                   options={{
                     title: "সেন্ড মানি",
+                    headerStyle: {
+                      backgroundColor: "#E91E63",
+                    },
                   }}
                   component={ConfirmSendMoneyScreen}
                 />
@@ -155,6 +161,9 @@ export default function App() {
                   name="SendMoney"
                   options={{
                     title: "সেন্ড মানি",
+                    headerStyle: {
+                      backgroundColor: "#E91E63",
+                    },
                   }}
                   component={SendMoney}
                 />
