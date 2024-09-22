@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import {
   Modal,
   View,
@@ -12,36 +13,19 @@ import { LinearGradient } from "expo-linear-gradient";
 
 const { width, height } = Dimensions.get("window");
 
-const SendMoneyModal = ({ visible, onClose }) => {
-  const [progress, setProgress] = useState(0);
-  const [isPressed, setIsPressed] = useState(false);
-
-  useEffect(() => {
-    let interval;
-    if (isPressed && progress < 1) {
-      interval = setInterval(() => {
-        setProgress((prev) => {
-          const newProgress = prev + 0.01;
-          if (newProgress >= 1) {
-            clearInterval(interval);
-            completeMethod();
-          }
-          return Math.min(newProgress, 1);
-        });
-      }, 20);
-    } else if (!isPressed) {
-      clearInterval(interval);
-      setProgress(0);
-    }
-    return () => clearInterval(interval);
-  }, [isPressed]);
-
-  const completeMethod = () => {
-    console.log("Send money complete");
-    setProgress(0);
-    onClose();
-  };
-
+const SendMoneyModal = ({
+  visible,
+  onClose,
+  recipientName,
+  recipientPhone,
+  amount,
+  charge,
+  newBalance,
+  reference,
+  progress,
+  onPressIn,
+  onPressOut,
+}) => {
   return (
     <Modal
       visible={visible}
@@ -60,30 +44,36 @@ const SendMoneyModal = ({ visible, onClose }) => {
 
           <View style={styles.profileContainer}>
             <View style={styles.avatar}>
-              <Text style={styles.avatarText}>N</Text>
+              <Text style={styles.avatarText}>{recipientName[0]}</Text>
             </View>
             <View style={styles.profileInfo}>
-              <Text style={styles.name}>Nahid Hasan</Text>
-              <Text style={styles.phone}>01910125428</Text>
+              <Text style={styles.name}>{recipientName}</Text>
+              <Text style={styles.phone}>{recipientPhone}</Text>
             </View>
           </View>
 
           <View style={styles.amountContainer}>
             <View style={styles.amountColumn}>
               <Text style={styles.amountLabel}>সর্বমোট</Text>
-              <Text style={styles.amountValue}>৳10.00</Text>
-              <Text style={styles.chargeText}>+ চার্জ প্রযোজ্য নয়</Text>
+              <Text style={styles.amountValue}>৳{amount.toFixed(2)}</Text>
+              <Text style={styles.chargeText}>
+                {charge > 0
+                  ? `+ চার্জ ৳${charge.toFixed(2)}`
+                  : "+ চার্জ প্রযোজ্য নয়"}
+              </Text>
             </View>
             <View style={styles.amountDivider} />
             <View style={styles.amountColumn}>
               <Text style={styles.amountLabel}>নতুন ব্যালেন্স</Text>
-              <Text style={styles.amountValue}>৳0.15</Text>
+              <Text style={styles.amountValue}>৳{newBalance.toFixed(2)}</Text>
             </View>
           </View>
 
-          <View style={styles.referenceContainer}>
-            <Text style={styles.referenceText}>রেফারেন্স</Text>
-          </View>
+          {reference && (
+            <View style={styles.referenceContainer}>
+              <Text style={styles.referenceText}>রেফারেন্স: {reference}</Text>
+            </View>
+          )}
 
           <View style={styles.infoContainer}>
             <Image
@@ -114,8 +104,8 @@ const SendMoneyModal = ({ visible, onClose }) => {
           >
             <TouchableOpacity
               style={styles.sendButton}
-              onPressIn={() => setIsPressed(true)}
-              onPressOut={() => setIsPressed(false)}
+              onPressIn={onPressIn}
+              onPressOut={onPressOut}
             >
               <Text style={styles.sendButtonText}>
                 সেন্ড মানি করতে ট্যাপ করে ধরে রাখুন
@@ -126,6 +116,20 @@ const SendMoneyModal = ({ visible, onClose }) => {
       </View>
     </Modal>
   );
+};
+
+SendMoneyModal.propTypes = {
+  visible: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  recipientName: PropTypes.string.isRequired,
+  recipientPhone: PropTypes.string.isRequired,
+  amount: PropTypes.number.isRequired,
+  charge: PropTypes.number.isRequired,
+  newBalance: PropTypes.number.isRequired,
+  reference: PropTypes.string,
+  progress: PropTypes.number.isRequired,
+  onPressIn: PropTypes.func.isRequired,
+  onPressOut: PropTypes.func.isRequired,
 };
 
 const styles = StyleSheet.create({

@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   View,
   Text,
@@ -6,39 +6,169 @@ import {
   Dimensions,
   TextInput,
   TouchableOpacity,
+  ActivityIndicator,
+  Alert,
 } from "react-native";
 import { Avatar } from "react-native-elements";
 import { Ionicons } from "@expo/vector-icons";
 import SendMoneyModal from "./SendMoneyModal";
+import { LoadingScreen } from "../../components/Loader/Loader";
 
 const { width } = Dimensions.get("window");
 const baseWidth = 375;
 const scale = width / baseWidth;
 
-export default function SendMoney({ route }) {
+export default function SendMoney({ route, navigation }) {
   const { recipient, amount } = route.params;
   const [pin, setPin] = useState("");
-  const [isModalVisible, setModalVisible] = useState(false);
-  const pinLength = 4;
-  const isEnglishLetter = (char) => /^[A-Za-z]$/.test(char);
-  const handlePinChange = (text) => {
-    setPin(text.slice(0, pinLength));
-  };
   const [reference, setReference] = useState("");
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [currentBalance, setCurrentBalance] = useState(20);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [progress, setProgress] = useState(0);
+  const [isPressed, setIsPressed] = useState(false);
   const maxChars = 50;
+  const pinLength = 4;
+  const maxReferenceChars = 50;
 
-  const handleReferenceChange = (text) => {
-    if (text.length <= maxChars) {
-      setReference(text);
+  useEffect(() => {
+    fetchCurrentBalance();
+  }, []);
+
+  useEffect(() => {
+    let interval;
+    if (isPressed && progress < 1) {
+      interval = setInterval(() => {
+        setProgress((prev) => {
+          const newProgress = prev + 0.1;
+          if (newProgress >= 1) {
+            clearInterval(interval);
+            handleSendMoney();
+          }
+          return Math.min(newProgress, 1);
+        });
+      }, 20);
+    } else if (!isPressed) {
+      clearInterval(interval);
+      setProgress(0);
+    }
+    return () => clearInterval(interval);
+  }, [isPressed, progress]);
+
+  const fetchCurrentBalance = async () => {
+    setIsLoading(true);
+    try {
+      const response = await new Promise((resolve) =>
+        setTimeout(() => resolve({ balance: 25000 }), 1000)
+      );
+      setCurrentBalance(response.balance);
+      setError(null);
+    } catch (err) {
+      setError("Failed to fetch current balance. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
+
+  const handlePinChange = useCallback(
+    (text) => {
+      setPin(text.slice(0, pinLength));
+    },
+    [pinLength]
+  );
+
+  const handleReferenceChange = useCallback(
+    (text) => {
+      setReference(text.slice(0, maxReferenceChars));
+    },
+    [maxReferenceChars]
+  );
+
   const toggleModal = () => {
-    setModalVisible(!isModalVisible);
+    setModalVisible(false);
   };
 
+  const validateInputs = useCallback(() => {
+    if (!amount || parseFloat(amount) <= 0) {
+      Alert.alert("Invalid Amount", "Please enter a valid amount.");
+      return false;
+    }
+    if (parseFloat(amount) > currentBalance) {
+      Alert.alert(
+        "Insufficient Balance",
+        "You do not have enough balance for this transaction."
+      );
+      return false;
+    }
+    if (pin.length !== pinLength) {
+      Alert.alert("Invalid PIN", "Please enter a valid 4-digit PIN.");
+      return false;
+    }
+    return true;
+  }, [amount, currentBalance, pin, pinLength]);
+
+  const handleSendMoney = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      setCurrentBalance((prevBalance) => prevBalance - parseFloat(amount));
+      setModalVisible(false);
+      navigation.navigate("TransactionSuccess", {
+        amount: parseFloat(amount),
+        recipient: recipient,
+      });
+    } catch (err) {
+      Alert.alert(
+        "Transaction Failed",
+        "Unable to complete the transaction. Please try again."
+      );
+    } finally {
+      setIsLoading(false);
+      setProgress(0);
+      setIsPressed(false);
+    }
+  }, [amount, recipient, navigation]);
+
+  const handlePressIn = useCallback(() => {
+    setIsPressed(true);
+  }, []);
+
+  const handlePressOut = useCallback(() => {
+    setIsPressed(false);
+  }, []);
+  if (isLoading) {
+    return <LoadingScreen />;
+  }
+  const isEnglishLetter = (char) => /^[A-Za-z]$/.test(char);
+  if (error) {
+    return (
+      <View style={styles.errorContainer}>
+        <Text style={styles.errorText}>{error}</Text>
+        <TouchableOpacity
+          style={styles.retryButton}
+          onPress={fetchCurrentBalance}
+        >
+          <Text style={styles.retryButtonText}>Retry</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
   return (
     <View style={styles.container}>
-      <SendMoneyModal visible={isModalVisible} onClose={toggleModal} />
+      <SendMoneyModal
+        visible={isModalVisible}
+        onClose={toggleModal}
+        recipientName={recipient.name}
+        recipientPhone={recipient.number}
+        amount={parseFloat(amount)}
+        charge={0}
+        newBalance={currentBalance - parseFloat(amount)}
+        reference={reference}
+        progress={progress}
+        onPressIn={handlePressIn}
+        onPressOut={handlePressOut}
+      />
       <View style={styles.recipientCard}>
         <Text style={styles.toText}>প্রাপক</Text>
         <View style={styles.recipientContainer}>
